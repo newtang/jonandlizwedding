@@ -1,0 +1,239 @@
+body {
+	padding: 0px;
+	margin: 0px;
+	font-family: "Palatino Linotype", Georgia, serif;
+	font-size: 18px;
+	line-height: 1.5em;
+	background: #fff url(../img/bg.jpg) top center repeat-x; /*#eae8de;*/
+	color: #333; /*#533b27;*/
+}
+a:link, a:visited {
+	text-decoration: none;
+	color: #7b9940;
+	border-bottom: 1px dotted #7b9940;
+}
+a:hover {
+	border-bottom: 1px solid #333;
+}
+a img {border:0;}
+.container {
+	background: url(../img/jonliztitle.png) 10px 0px no-repeat;
+	width: 960px;
+	margin: 45px auto;
+	min-height: 400px;
+	overflow: hidden;
+}
+.spacer {
+	height: 48px;
+}
+ul.header, li {
+	margin: 0px;
+	padding: 0px;
+	overflow: auto;
+}
+ul.header {
+	width: 960px;
+	background: url(../img/headerbg.png) top left repeat-x;
+}
+ul.header li {
+	float: left;
+	display: inline-block;
+	margin-right: 10px;
+	padding: 0px 3px;
+	text-transform: uppercase;
+	line-height: 35px;
+	height: 37px;
+	font-weight: bold;
+	font-size: 11px;
+}
+ul.header li:first-child {
+	width: 200px; 
+	text-align: center;
+	font-size: 14px;
+	color: #f2f2f2;
+	padding: 0px;
+}
+ul.header a:link, ul.header a:visited {
+	text-decoration: none;
+	color: #333;
+	border-bottom: none;
+}
+ul.header a:hover {
+	border-bottom: 1px solid #333;
+}
+.content {
+	padding: 20px;
+	overflow: hidden;
+}
+h1 {
+font: bold 54px "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+text-transform: uppercase;
+letter-spacing: 3px;
+padding: 0px;
+margin: 20px 0px 0px 0px;
+}
+h2 {
+font: bold 24px "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+text-transform: uppercase;
+letter-spacing: 2px;
+padding: 0px;
+margin: 40px 0px 8px 0px;
+}
+h3 {
+font: bold 14px "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+text-transform: uppercase;
+letter-spacing: 1px;
+padding: 0px;
+margin: 12px 0px 6px 0px;
+float: left;
+display: inline;
+}
+.loading {
+float: left;
+display: inline;
+font-size: 12px;
+margin: 6px 0px 0px 10px;
+}
+.loading img {
+margin: 4px 5px 0px 0px;
+float: left;
+display: inline;
+}
+#controlpanel {
+border-top: 1px dotted #333;
+border-bottom: 1px dotted #333;
+padding: 0px 0px 10px 0px;
+}
+#tags {
+float: left;
+display: inline;
+width: 546px;
+margin-right: 12px;
+}
+#search {
+float: left;
+display: inline;
+}
+.flickrlinks {
+margin-top: 15px;
+line-height: 1.2em;
+color: #999;
+}
+a.tag {
+	width: 79px;
+	height: 24px;
+	padding: 0px;
+	margin: 0px 12px 12px 0px;
+	border: 1px solid #999;
+	float: left;
+	display: inline;
+	text-align: center;
+	font: bold 12px Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	line-height: 24px;
+	text-decoration: none;
+	color: #333;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+a.tagalt {
+width: 131px;
+}
+a.tag:hover, a.tagalt:hover, a#morePhotos:hover {
+background: #4c9815;
+background: #e3f7ba;
+}
+a.selected, a.selected:hover {
+background: #c7e58a;
+}
+#searchbox {
+height: 20px;
+width: 348px;
+}
+#search, #search a {
+display: inline;
+font-size: 14px;
+}
+#photoarea {
+font-size: 10px;
+font-family: Helvetica, Arial, sans-serif;
+line-height: normal;
+}
+.photo {
+width: 75px;
+height: 75px;
+padding: 2px;
+background: #fff;
+border: 1px solid #333;
+float: left;
+display: inline;
+margin: 12px 12px 0px 0px;
+}
+.last {
+margin: 12px 0px 0px 0px;
+}
+a#morePhotos {
+	display: block;
+	cursor: pointer;
+	text-align: center;
+	width: 174px;
+	margin: 20px auto 5px auto;
+	height: 36px;
+	padding: 0px;
+	font: bold 18px Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	line-height: 36px;
+	text-decoration: none;
+	color: #333;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid #999;
+}
+#viewingInfo {
+text-align: center;
+font-size: 16px;
+}
+.footer {
+clear: both;
+margin-top: 40px;
+padding: 5px 15px;
+height: 30px;
+line-height: 30px;
+font-size: 12px;
+border-top: 1px dotted #333;
+}
+.clear {
+clear: both;
+}
+
+
+/* Wedding Party */
+.wedding-party h1 { width: 935px; }
+.wedding-party ul { list-style: none; margin: 0; padding: 0; width: 932px; }
+.wedding-party ul li { float: left; padding: 0 4px 4px 0; display: block; margin: 0 !important; }
+.wedding-party ul li a { border: 1px solid #666; cursor: default; display: block; overflow: hidden; height: 299px; width: 150px; position: relative; text-decoration: none; }
+.wedding-party ul li p { margin: 0; padding: 0; width: 299px; display: block; }
+.wedding-party ul li img { border: 0; margin-left: -63px; }
+.wedding-party ul li span { display: block; }
+.wedding-party ul li .bio {
+    background-color: rgba(0, 0, 0, .81);
+    bottom: 0;
+    color: #FFF;
+    display: none;
+    height: 57px;
+    left: 0;
+    padding: 15px;
+    position: absolute;
+    width: 270px;
+}
+.wedding-party .bio .person-name { font: bold 18px "Helvetica Neue", Helvetica, Arial, Sans-Serif; margin-bottom: 3px; }
+.wedding-party .bio .person-title, .wedding-party .bio .person-class { font: bold 11px Helvetica, Arial, Sans-Serif; margin-bottom: 2px; }
+.wedding-party .bio .person-class { color: #E7D9BF; margin-bottom: 7px; }
+.wedding-party .bio .person-bio { font: 11px Arial, Sans-Serif; line-height: 14px; }
+#a1, #a2 { width: 299px; }
+#a1 span, #a2 span { display: block; }
+#a1 img, #a2 img { margin-left: 0; }
+

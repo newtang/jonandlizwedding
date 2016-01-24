@@ -1,0 +1,27 @@
+{
+  "name": "jonandlizwedding",
+  "version": "1.0.0",
+  "description": "Wedding Website",
+  "main": "index.js",
+  "engines": {
+    "node": "0.12.6",
+    "npm": "2.12.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newtang/jonandlizwedding.git"
+  },
+  "author": "Jonathan New",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/newtang/jonandlizwedding/issues"
+  },
+  "homepage": "https://github.com/newtang/jonandlizwedding#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "nconf": "^0.8.2"
+  }
+}

@@ -1,0 +1,377 @@
+<?php
+	require_once "/home/admin/public_html/jonandlizwedding.com/private/PhlickrLib/fetcher.php";
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jon and Liz got married!</title>
+
+
+<link rel="stylesheet" type="text/css" href="js/shadowbox-3.0.3/shadowbox.css">
+<link rel="stylesheet" href="jquery-ui-1.8.5.custom/development-bundle/themes/base/jquery.ui.all.css">
+<link rel="stylesheet" href="jquery-ui-1.8.5.custom/development-bundle/demos/demos.css">
+<link rel="stylesheet" href="css/styles.css" type="text/css" />
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="spacer"></div>
+
+<ul class="header">
+<li id="day">August 8, 2010</li>
+<li><a href="index.html"><strong>Home</strong></a></li>
+<li><a href="howwemet.html">How We Met</a></li>
+<li><a href="weddingparty.html">Wedding Party</a></li>
+<li><a href="ceremony.html">The Ceremony</a></li>
+<li><a href="reception.html">The Reception</a></li>
+<li><a href="outoftowners.html">Out-of-Towners</a></li>
+<li><a href="registry.html">Registry</a></li>
+</ul>
+
+
+<div class="content">
+<h1>Welcome!</h1>
+
+<p>Jon &amp; Liz got married! Check out photos from our wedding below. If you have photos from the wedding, <a href="http://www.flickr.com/groups/jonandlizwedding/">add them to our Flickr group</a>, or <a href="mailto:rsvp@jonandlizwedding.com">email them to us</a> and we'll upload them for you! </p>
+
+<h2>Wedding Photos</h2>
+
+    <div id="controlpanel">
+    
+    	<div id="tags">
+       	    <h3>View Photos of:</h3> <div class="loading" id="loadtag" style="display:none;"><img src="img/loader.gif" /> Loading...</div>
+			<div class="clear"></div>
+            <a rel="default" class="tag selected">Everything</a>
+            <a rel="official" class="tag">Official</a>
+            <a rel="portrait" class="tag">Portraits</a>
+            <a rel="preparation" class="tag">Prep</a>
+            <a rel="ceremony" class="tag tagalt">Ceremony</a>
+			<a rel="limo" class="tag">Limo</a>
+			<a rel="food" class="tag">Food</a>
+            <a rel="dancing" class="tag">Dancing</a>
+			<a rel="game" class="tag">Games</a>
+            <a rel="disposable camera" class="tag tagalt">Table Cameras</a>
+        </div>
+        
+        <div id="search">
+        	<h3>Find a person:</h3><div class="loading" id="loadperson" style="display:none;"><img src="img/loader.gif" /> Loading...</div>
+			<div class="clear"></div>
+            <input type="text" id="searchbox" />
+
+			<div class="flickrlinks">
+			View <a href="http://www.flickr.com/groups/jonandlizwedding/"> group photos</a> or <a href="http://www.flickr.com/photos/pr0digie/sets/72157625226568726/">official photos</a> on Flickr.
+			</div>
+        </div>
+        
+        <div class="clear"></div>
+    
+    </div>
+    
+    <div id="photoarea">
+    </div>
+
+
+<div class="clear"></div>
+
+<a id="morePhotos"><img style="display:none;" src="img/loader.gif" /><span>More</span></a>
+
+<div id="viewingInfo"></div>
+
+</div>
+
+<div class="footer">
+&copy; 2010 Jon &lt;3 Liz  &middot; Ask us a question or just get in touch: <a href="mailto:rsvp@jonandlizwedding.com">rsvp@jonandlizwedding.com</a>
+</div>
+
+</div>
+</body>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.core.js"></script>
+<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.widget.js"></script>
+<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.position.js"></script>
+<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.autocomplete.js"></script>
+
+<!--<script src="jquery-ui-1.8.5.custom\js\jquery-ui-1.8.5.custom.min.js"></script>-->
+
+
+<script src="js/shadowbox-3.0.3/shadowbox.js"></script>
+<script>
+
+
+  var jlWedding = jlWedding || {};
+  
+  jlWedding.photoManager = (function(){
+	var startingData = <?php
+		$fetcher = new GroupPhotoFetcher();
+		$fetcher->getDefaultPhotos();
+	?>;
+
+	var totalAvailable = startingData.total;
+	var totalShowing = 0;
+	var currentPage = 1;
+	var currentTag = startingData.tag;
+	var photoArea = null;
+	var $morePhotos = null;	
+	var $viewingInfo = null;
+
+	var people =  [		{realValue:"bridesmaids", label:"All Bridesmaids"},
+	{realValue:"groomsmen", label:"All Groomsmen"},
+	{realValue:"parents", label:"Jon & Liz's Parents"},
+	{realValue:"Amanda", label:"Amanda Bytheway (Bridesmaid)"},
+	{realValue:"Ann Nealon", label:"Ann Nealon"},
+	{realValue:"Anna", label:"Anna Bytheway (Flower girl)"},
+	{realValue:"Barbara New", label:"Barbara New (Jon's Mom)"},
+	{realValue:"Ben Bytheway", label:"Ben Bytheway"},
+	{realValue:"Ben Flasher", label:"Ben Flasher (Groomsman)"},
+	{realValue:"Ben Halsted", label:"Ben Halsted"},
+	{realValue:"Bill Duffy", label:"Bill Duffy"},
+	{realValue:"Bob Retallack", label:"Bob Retallack"},
+	{realValue:"Cher Pritchard", label:"Cher Pritchard"},
+	{realValue:"Chris Daly", label:"Chris Daly"},
+	{realValue:"Chris Guarneiri", label:"Chris Guarneiri"},
+	{realValue:"Chrissy Albright", label:"Chrissy Albright"},
+	{realValue:"Cindy Marsh", label:"Cindy Marsh"},
+	{realValue:"Cris Bridge", label:"Cris Bridge"},
+	{realValue:"Cynde Pritchard", label:"Cynde Pritchard"},
+	{realValue:"dad", label:"David Hall (Liz's Dad)"},
+	{realValue:"Dakota Retallack", label:"Dakota Retallack"},
+	{realValue:"David Daines", label:"David Daines"},
+	{realValue:"DJ Dan", label:"DJ Dan"},
+	{realValue:"Donald Pritchard", label:"Donald Pritchard"},
+	{realValue:"Earl Retallack", label:"Earl Retallack"},
+	{realValue:"Emma", label:"Emma Daines"},
+	{realValue:"Eric Brelsford", label:"Eric Brelsford (Groomsman)"},
+	{realValue:"Eric Streshenkoff", label:"Eric Streshenkoff"},
+	{realValue:"Evan Sands", label:"Evan Sands"},
+	{realValue:"Frank New", label:"Frank New (Jon's Dad)"},
+	{realValue:"Gabrielle Zagorski", label:"Gabrielle Zagorski"},
+	{realValue:"Haink Tu", label:"Haink Tu"},
+	{realValue:"Jason Kafalas", label:"Jason Kafalas"},
+	{realValue:"Joe Buccina", label:"Joe Buccina"},
+	{realValue:"John Fiddler", label:"John Fiddler"},
+	{realValue:"John Meehan", label:"John Meehan"},
+	{realValue:"Jon", label:"Jon New (groom)"},
+	{realValue:"Julianna Woite", label:"Julianna Woite"},
+	{realValue:"Kat Waddell", label:"Kat Waddell"},
+	{realValue:"Kim Retallack", label:"Kim Retallack"},
+	{realValue:"Lacey Woite", label:"Lacey Woite"},
+	{realValue:"Lee Ann Streshenkoff", label:"Lee Ann Streshenkoff"},
+	{realValue:"Liz", label:"Liz Hall (bride)"},
+	{realValue:"Lois Fiddler", label:"Lois Fiddler"},
+	{realValue:"Marian Doyle", label:"Marian Doyle"},
+	{realValue:"Matt Retallack", label:"Matt Retallack"},
+	{realValue:"Melissa Retallack", label:"Melissa Retallack"},
+	{realValue:"Michael New", label:"Michael New (Groomsman)"},
+	{realValue:"Mitch Woite", label:"Mitch Woite"},
+	{realValue:"Molly", label:"Molly Bytheway (Flower girl)"},
+	{realValue:"mom", label:"Carol Hall (Liz's Mom)"},
+	{realValue:"Nate", label:"Nate Hall (Groomsman)"},
+	{realValue:"Nick Streshenkoff", label:"Nick Streshenkoff"},
+	{realValue:"Nicole Waxmonsky", label:"Nicole Waxmonsky"},
+	{realValue:"Nikki Streshenkoff", label:"Nikki Streshenkoff"},
+	{realValue:"Nimesh Singh", label:"Nimesh Singh"},
+	{realValue:"Pat Seibel", label:"Pat Seibel"},
+	{realValue:"Rachel Engelson", label:"Rachel Engelson"},
+	{realValue:"Rani", label:"Rani Sentana (Maid of Honor)"},
+	{realValue:"Rob Woite", label:"Rob Woite"},
+	{realValue:"Ruthanna", label:"Ruthanna Daines (Bridesmaid)"},
+	{realValue:"Ryan Yee", label:"Ryan Yee"},
+	{realValue:"Sarah Yannello", label:"Sarah Yannello"},
+	{realValue:"Steve Markham", label:"Steve Markham"},
+	{realValue:"Tim Doyle", label:"Tim Doyle (Best Man)"},
+	{realValue:"Tim Madsen", label:"Tim Madsen"},
+	{realValue:"Vicki Furmanek", label:"Vicki Furmanek"},
+	{realValue:"Vicky Woite", label:"Vicky Woite"},
+	{realValue:"Wendy Buckley", label:"Wendy Buckley"},
+	{realValue:"Wendy Woite", label:"Wendy Woite"},
+	{realValue:"Zahra", label:"Zahra Garrett (Bridesmaid)"},
+			];
+
+	var constructHTML = function(photos){
+	 	var html = [],
+	 	    len = photos.length;
+
+		html.add = function(item){
+			html.push(item);
+			return this;
+		}
+
+		
+		
+		for(var i=0; i<len; ++i){
+			html.add("<div class='photo").add((i!==0 && (i+1)%10===0)? " last" : "").add("'>")
+					 .add("<a rel='shadowbox[wedding]' title='").add(photos[i].title).add("' href='").add(photos[i].url).add(".jpg'>")						.add("<img width='75' height='75' src='").add(photos[i].url).add("_s.jpg' alt='").add(photos[i].title).add("'/></a></div>");
+
+
+		}
+
+		return html.join("");
+
+	};
+
+	var appendPhotos = function(photos, addToSBCache){
+
+
+		var html = constructHTML(photos);	
+		photoArea.append(html);
+
+		if(addToSBCache){
+			//reduce to "len" instead of getting all of them.
+			Shadowbox.setup($(".photo a", photoArea).get());
+		//	Shadowbox.setup($(".photo a", photoArea).get().slice(0, (-1 * len)));
+		}
+
+		totalShowing += photos.length;
+
+	};
+
+	var updateUI = function(){
+	  if(totalShowing >= totalAvailable){
+	    $morePhotos.hide();
+	  }
+	  else{
+	    $morePhotos.show();
+	  }
+
+	  $viewingInfo.html(["Viewing <strong>", totalShowing, "</strong> of <strong>", totalAvailable, "</strong> photos"].join(""));
+
+	}
+
+	var replacePhotos = function(photos){
+
+		Shadowbox.clearCache();
+
+		var html = constructHTML(photos);	
+		photoArea.html(html);
+		Shadowbox.setup($(".photo a", photoArea).get());
+		totalShowing = photos.length;
+		updateUI();
+	};
+
+	var onGetMorePhotos = function(data, textStatus, request){
+		var json = $.parseJSON(data);
+		currentPage++;
+		appendPhotos(json.photos, true);
+		updateUI();
+	};
+
+	var onGetNewPhotos = function(data, textStatus, request){
+		var json = $.parseJSON(data);
+		currentPage = 1;
+		currentTag = json.tag;
+		totalAvailable = json.total;
+		replacePhotos(json.photos);
+		updateUI();
+	};
+
+	var requestPhotos = function(page, tag, successFxn){
+	  $.ajax({
+	    data:{
+	       page:page,
+	       tag:tag
+	    },
+	    url:"getPhotos.php",
+	    success:successFxn
+	  });
+
+	};
+
+	var setupFirstPhotos = function(){
+	  appendPhotos(startingData.photos, false);
+
+	  Shadowbox.init({
+	    overlayOpacity:0.7
+	  });
+
+	  updateUI();
+	};
+
+	var showLoadTag = function(){
+	  $("#loadtag").show();
+	};
+
+	var hideLoadTag = function(){
+	  $("#loadtag").hide();
+	}
+
+	var showLoadPerson = function(){
+	  $("#loadperson").show();
+	};
+
+	var hideLoadPerson = function(){
+	  $("#loadperson").hide();
+	};
+
+	var showLoadingMore = function(){
+	  $("#morePhotos img").show();
+	  $("#morePhotos span").text(" Loading...");
+	}
+
+	var showMoreLink = function(){
+	  $("#morePhotos img").hide();
+	  $("#morePhotos span").text("More");
+	}
+
+
+	$(window).load(function(){
+	  photoArea = $("#photoarea");
+	  $morePhotos = $("#morePhotos");
+	  $viewingInfo = $("#viewingInfo");
+	  
+	  setupFirstPhotos();
+	
+	  $morePhotos.click(function(){
+	  	//todo: unbind event after click.  rebind data is loaded
+		showLoadingMore();
+		requestPhotos(currentPage+1, currentTag, function(data, textStatus, request){
+			showMoreLink();
+			onGetMorePhotos(data, textStatus, request);
+		});
+	  });
+
+	  $(".tag").click(function(){
+	 	var tag = $(this).attr("rel");
+		if(tag != currentTag){
+		  document.getElementById("searchbox").value = "";
+		  //todo inefficient.
+		  $(".selected").removeClass("selected");
+		  $(this).addClass("selected");
+		  showLoadTag();
+		  requestPhotos(1, tag, function(data, textStatus, request){
+		    hideLoadTag();
+		    onGetNewPhotos(data, textStatus, request);
+		  });
+		}
+
+	  });
+
+	  $("#searchbox").autocomplete({
+	  	source:people,
+		select:function(event,ui){
+		  var tag = ui.item.realValue;
+		  if(tag != currentTag){
+		    //todo inefficient
+		    $(".selected").removeClass("selected");
+		    showLoadPerson();
+		    requestPhotos(1, tag, function(data, textStatus, request){
+		    	hideLoadPerson();
+			onGetNewPhotos(data, textStatus,request);
+		    });
+		  }
+		
+		}
+	  });
+	
+	});
+
+  })();
+
+
+
+</script>
+</html>
