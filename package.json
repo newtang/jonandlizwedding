@@ -22,6 +22,7 @@
   "homepage": "https://github.com/newtang/jonandlizwedding#readme",
   "dependencies": {
     "express": "^4.13.4",
+    "flickrapi": "^0.3.36",
     "nconf": "^0.8.2"
   }
 }
