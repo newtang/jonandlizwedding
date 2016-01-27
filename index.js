@@ -1,37 +1,17 @@
-var nconf = require("nconf"),
-	express = require('express'),
-	Flickr = require("flickrapi"),
+"use strict";
+
+var nconf = require("nconf");
+nconf.env().file({file: ".env"});
+var express = require('express'),
+	flickr = require("./flickr.js"),
+	fs = require("fs"),
 	app = express();
 
-nconf.env().file({file: ".env"});
-
-var flickrOptions = {
-  api_key: nconf.get("FLICKR_KEY"),
-  secret: nconf.get("FLICKR_SECRET")
-},
-port = nconf.get("PORT");
-
-function constructPhotoJson(apiResults){
-	var json = {
-		page: apiResults.photos.page,
-		total: apiResults.photos.total,
-		tag: apiResults.photos.tag,
-		photos: [apiResults.photos.photo.map(function(item){
-			return {
-				title: item.title,
-				url: buildImgUrl(item, 's')
-			};
-		})]
 
 
-	};
-	return json;
-}
+var port = nconf.get("PORT");
 
-function buildImgUrl(item, size){
-	var type = "jpg";
-	return "http://farm" + item.farm + ".static.flickr.com/" + item.server + "/"+ item.id + "_" + item.secret + "_" + size + "." + type;
-}
+
 
 /*
  public function buildImgUrl($size = self::SIZE_240PX) {
@@ -54,47 +34,44 @@ function buildImgUrl(item, size){
     }
 */
 
-Flickr.tokenOnly(flickrOptions, function(error, flickr) {
-	if(error){
-		console.log("Error retrieving flickr api.", error);
-	}
-	else if(flickr){
-		console.log("Flickr apis retrieved successfully");
+flickr.init(function(err){
+	if(err){
+		console.error("Error retrieving flickr api.", error);
+		throw err;
 	}
 	else{
-		console.log("No error, and no flickr api. Weird");
+		console.log("Flickr apis are ready");
 	}
-
-
-	 /*
-	  array(
-		     'group_id' => self::GROUP_ID,
-//		     'user_id' => $api->getUserId(),
-		     'per_page' => self::PER_PAGE,
-		     'page' => $page
-		    );
-
-		if($tag != NULL && $tag != self::DEFAULT_TAG){
-			$args['tags'] = $tag;
-		}
-	  */
+	
 
 	app.get("/getPhotos", function(req, res){
-		  flickr.groups.pools.getPhotos({
-		  	group_id: "1509390@N21",
-		  	per_page: 30,
-		  	page: 1
-		  }, function(err, result){
-		  	var newJSON = constructPhotoJson(result);
-		  	console.log(newJSON);
-
-
-
-
-		  	res.send(newJSON);
-		  });
+		flickr.getPhotos(1, null, function(err, results){
+			res.send(results);
+		});
   	});
 
+	app.get('/', function(req, res){
+		fs.readFile("./html/index.html", "utf8", function(fileErr, fileContents){
+			if(err){
+				console.error("Error reading file", fileErr);
+				res.status(404);
+			}
+			else{
+				flickr.getPhotosDefault(function(photoErr, results){
+					if(err){
+						console.error("Error fetching photos", photoErr);
+						results = "{}";
+					}
+
+					//lame template, but it's the only place I need it.
+					fileContents = fileContents.split("//STARTING_DATA_HERE").join(JSON.stringify(results));
+					res.send(fileContents);
+				});
+				
+			}
+
+		});
+	});
 	app.use('/', express.static(__dirname + "/html"));
 
 	//javascript files

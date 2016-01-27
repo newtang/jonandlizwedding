@@ -106,10 +106,7 @@
   var jlWedding = jlWedding || {};
   
   jlWedding.photoManager = (function(){
-	var startingData = <?php
-		$fetcher = new GroupPhotoFetcher();
-		$fetcher->getDefaultPhotos();
-	?>;
+	var startingData = //STARTING_DATA_HERE;
 
 	var totalAvailable = startingData.total;
 	var totalShowing = 0;
