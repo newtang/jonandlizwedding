@@ -19,14 +19,21 @@ function constructPhotoJson(apiResults){
 		photos: [apiResults.photos.photo.map(function(item){
 			return {
 				title: item.title,
-				url: buildImgUrl(item)
-			}
-		})];
+				url: buildImgUrl(item, 's')
+			};
+		})]
 
 
 	};
+	return json;
 }
 
+function buildImgUrl(item, size){
+	var type = "jpg";
+	return "http://farm" + item.farm + ".static.flickr.com/" + item.server + "/"+ item.id + "_" + item.secret + "_" + size + "." + type;
+}
+
+/*
  public function buildImgUrl($size = self::SIZE_240PX) {
         $type = 'jpg';
         $sizeStr = "_$size";
@@ -45,6 +52,7 @@ function constructPhotoJson(apiResults){
             $this->getFarm(), $this->getServer(), $this->getId(), $this->getSecret(), $sizeStr, $type);
         return $url;
     }
+*/
 
 Flickr.tokenOnly(flickrOptions, function(error, flickr) {
 	if(error){
@@ -77,12 +85,13 @@ Flickr.tokenOnly(flickrOptions, function(error, flickr) {
 		  	per_page: 30,
 		  	page: 1
 		  }, function(err, result){
-		  	console.log(result);
+		  	var newJSON = constructPhotoJson(result);
+		  	console.log(newJSON);
 
 
 
 
-		  	res.send(result);
+		  	res.send(newJSON);
 		  });
   	});
 
