@@ -44,8 +44,10 @@ flickr.init(function(err){
 	}
 	
 
-	app.get("/getPhotos", function(req, res){
-		flickr.getPhotos(1, null, function(err, results){
+	app.get("/getPhotos.php", function(req, res){
+		var page = req.query.page || 1,
+			tag = req.query.tag;
+		flickr.getPhotos(page, tag, function(err, results){
 			res.send(results);
 		});
   	});

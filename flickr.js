@@ -16,13 +16,13 @@ function assert(obj, str){
 	}
 }
 
-function constructPhotoJson(apiResults){
+function constructPhotoJson(apiResults, tag){
 	if(apiResults && apiResults.photos){
 		apiResults.photos.photo = apiResults.photos.photo || [];
 		return {
 			page: apiResults.photos.page,
-			total: apiResults.photos.total,
-			tag: apiResults.photos.tag,
+			total: parseInt(apiResults.photos.total, 10),
+			tag: tag,
 			photos: apiResults.photos.photo.map(function(item){
 				return {
 					title: item.title,
@@ -67,17 +67,23 @@ module.exports = {
 	getPhotos: function(page, tag, callback){
 		assert(flickrLib, "Init not called");
 		assert(callback, "Callback required");
-		flickrLib.groups.pools.getPhotos({
+
+		var params = {
 		  	group_id: GROUP_ID,
 		  	per_page: PER_PAGE,
-		  	tag: tag,
 		  	page: page
-		}, function(err, result){
+		};
+
+		if(tag){
+			params.tags = tag;
+		}
+
+		flickrLib.groups.pools.getPhotos(params, function(err, result){
 			if(err){
 				callback(result, newJSON);
 			}
 			else{
-			  	var newJSON = constructPhotoJson(result);
+			  	var newJSON = constructPhotoJson(result, tag);
 
 			  	callback(null, newJSON);
 			}

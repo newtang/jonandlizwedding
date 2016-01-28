@@ -8,8 +8,8 @@
 
 
 <link rel="stylesheet" type="text/css" href="js/shadowbox-3.0.3/shadowbox.css">
-<link rel="stylesheet" href="jquery-ui-1.8.5.custom/development-bundle/themes/base/jquery.ui.all.css">
-<link rel="stylesheet" href="jquery-ui-1.8.5.custom/development-bundle/demos/demos.css">
+<link rel="stylesheet" href="js/jquery-ui-1.8.5.custom/development-bundle/themes/base/jquery.ui.all.css">
+<link rel="stylesheet" href="js/jquery-ui-1.8.5.custom/development-bundle/demos/demos.css">
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
 </head>
 
@@ -91,10 +91,10 @@
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.core.js"></script>
-<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.widget.js"></script>
-<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.position.js"></script>
-<script src="jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.autocomplete.js"></script>
+<script src="js/jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.core.js"></script>
+<script src="js/jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.widget.js"></script>
+<script src="js/jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.position.js"></script>
+<script src="js/jquery-ui-1.8.5.custom/development-bundle/ui/jquery.ui.autocomplete.js"></script>
 
 <!--<script src="jquery-ui-1.8.5.custom\js\jquery-ui-1.8.5.custom.min.js"></script>-->
 
@@ -250,15 +250,13 @@
 		updateUI();
 	};
 
-	var onGetMorePhotos = function(data, textStatus, request){
-		var json = $.parseJSON(data);
+	var onGetMorePhotos = function(json, textStatus, request){
 		currentPage++;
 		appendPhotos(json.photos, true);
 		updateUI();
 	};
 
-	var onGetNewPhotos = function(data, textStatus, request){
-		var json = $.parseJSON(data);
+	var onGetNewPhotos = function(json, textStatus, request){
 		currentPage = 1;
 		currentTag = json.tag;
 		totalAvailable = json.total;
