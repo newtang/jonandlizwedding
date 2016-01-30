@@ -17,6 +17,7 @@ function assert(obj, str){
 }
 
 function constructPhotoJson(apiResults, tag){
+	console.log("apiResults: " + JSON.stringify(apiResults));
 	if(apiResults && apiResults.photos){
 		apiResults.photos.photo = apiResults.photos.photo || [];
 		return {
@@ -74,13 +75,19 @@ module.exports = {
 		  	page: page
 		};
 
-		if(tag){
-			params.tags = tag;
+		if(tag && typeof tag === "string"){
+			tag = tag.trim();
+			if(tag !== "null" && tag !== "default"){
+				params.tags = tag;
+			}
 		}
+
+		console.log("params: " + JSON.stringify(params));
 
 		flickrLib.groups.pools.getPhotos(params, function(err, result){
 			if(err){
-				callback(result, newJSON);
+				console.log("err: " + err);
+				callback(err, null);
 			}
 			else{
 			  	var newJSON = constructPhotoJson(result, tag);
