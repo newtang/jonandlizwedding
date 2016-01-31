@@ -17,7 +17,6 @@ function assert(obj, str){
 }
 
 function constructPhotoJson(apiResults, tag){
-	console.log("apiResults: " + JSON.stringify(apiResults));
 	if(apiResults && apiResults.photos){
 		apiResults.photos.photo = apiResults.photos.photo || [];
 		return {
@@ -81,8 +80,6 @@ module.exports = {
 				params.tags = tag;
 			}
 		}
-
-		console.log("params: " + JSON.stringify(params));
 
 		flickrLib.groups.pools.getPhotos(params, function(err, result){
 			if(err){
