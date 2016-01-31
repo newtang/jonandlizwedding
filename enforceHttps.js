@@ -1,6 +1,6 @@
 "use strict";
 
-var nconf = require("nconf");
+var env = require("./env.js");
 
 module.exports = function(req, res, next){
 
@@ -10,20 +10,20 @@ module.exports = function(req, res, next){
 
 
 	//if people navigate to jonandlizwedding.herokuapp.com, I'd like to redirect them to jonandlizwedding.com.
-	if(nconf.get("HEROKUAPP_REDIRECT") && (!hostHeaderValue || hostHeaderValue.toLowerCase().indexOf("herokuapp") !== -1)){
+	if(env.get("HEROKUAPP_REDIRECT") && (!hostHeaderValue || hostHeaderValue.toLowerCase().indexOf("herokuapp") !== -1)){
 		hostHeaderValue = "plumfeed.com";
 		doRedirect = true;
 	}
 	
 	//redirect from http to https if setting is on
-	if(nconf.get("HTTPS_REDIRECT") && forwardHeaderValue && forwardHeaderValue !== "https"){
+	if(env.get("HTTPS_REDIRECT") && forwardHeaderValue && forwardHeaderValue !== "https"){
 		doRedirect = true;
 	}
 		
 	if(doRedirect){
 
 		var protocol = "https://";
-		if(!nconf.get("HTTPS_REDIRECT")){
+		if(!env.get("HTTPS_REDIRECT")){
 			protocol = "http://";
 		}
 

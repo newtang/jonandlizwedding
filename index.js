@@ -1,13 +1,11 @@
 "use strict";
 
-var nconf = require("nconf");
-nconf.env().file({file: ".env"});
-
-var express = require('express'),
+var env = require("./env"),
+	express = require('express'),
 	flickr = require("./flickr.js"),
 	fs = require("fs"),
 	app = express(),
-	port = nconf.get("PORT");
+	port = env.get("PORT");
 
 app.use(require("./enforceHttps.js"));
 flickr.init(function(err){

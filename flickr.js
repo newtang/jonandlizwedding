@@ -1,10 +1,10 @@
 "use strict";
 
-var Flickr = require("flickrapi"),
-	nconf = require("nconf"),
+var env = require("./env.js"),
+	Flickr = require("flickrapi"),
 	flickrOptions = {
-	  api_key: nconf.get("FLICKR_KEY"),
-	  secret: nconf.get("FLICKR_SECRET")
+	  api_key: env.get("FLICKR_KEY"),
+	  secret: env.get("FLICKR_SECRET")
 	},
 	GROUP_ID = "1509390@N21",
 	PER_PAGE = 30,
