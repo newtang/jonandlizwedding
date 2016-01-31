@@ -27,7 +27,7 @@ flickr.init(function(err){
 		});
   	});
 
-	app.get('/', function(req, res){
+	var handleHome = function(req, res){
 		fs.readFile("./html/index.html", "utf8", function(fileErr, fileContents){
 			if(err){
 				console.error("Error reading file", fileErr);
@@ -48,7 +48,10 @@ flickr.init(function(err){
 			}
 
 		});
-	});
+	};
+
+	app.get('/', handleHome);
+	app.get('/index.html', handleHome);
 	app.use('/', express.static(__dirname + "/html"));
 
 	//javascript files
