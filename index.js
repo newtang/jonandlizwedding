@@ -9,6 +9,7 @@ var express = require('express'),
 	app = express(),
 	port = nconf.get("PORT");
 
+app.use(require("./enforceHttps.js"));
 flickr.init(function(err){
 	if(err){
 		console.error("Error retrieving flickr api.", error);
