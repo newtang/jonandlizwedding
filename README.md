@@ -6,3 +6,4 @@ make encrypt_conf to encrypt the .env file
 
 http://ejohn.org/blog/keeping-passwords-in-source-control/
 
+I saved all the json files that the flickr library downloads. Not the best solution, but good enough for now. If I need to update it, I can locally delete the folder, run the app, and it'll redownload them. I can then recommit the diffs.
