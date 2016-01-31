@@ -11,7 +11,7 @@ module.exports = function(req, res, next){
 
 	//if people navigate to jonandlizwedding.herokuapp.com, I'd like to redirect them to jonandlizwedding.com.
 	if(env.get("HEROKUAPP_REDIRECT") && (!hostHeaderValue || hostHeaderValue.toLowerCase().indexOf("herokuapp") !== -1)){
-		hostHeaderValue = "plumfeed.com";
+		hostHeaderValue = "jonandlizwedding.com";
 		doRedirect = true;
 	}
 	
