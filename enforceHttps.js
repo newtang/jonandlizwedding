@@ -13,11 +13,14 @@ module.exports = function(req, res, next){
 	if(env.get("HEROKUAPP_REDIRECT") && (!hostHeaderValue || hostHeaderValue.toLowerCase().indexOf("herokuapp") !== -1)){
 		hostHeaderValue = "jonandlizwedding.com";
 		doRedirect = true;
+		console.log("Heroku app redirect");
 	}
 	
 	//redirect from http to https if setting is on
 	if(env.get("HTTPS_REDIRECT") && forwardHeaderValue && forwardHeaderValue !== "https"){
 		doRedirect = true;
+		console.log("https redirect");
+		console.log("forwardHeaderValue", forwardHeaderValue);
 	}
 		
 	if(doRedirect){
@@ -27,7 +30,9 @@ module.exports = function(req, res, next){
 			protocol = "http://";
 		}
 
-		res.redirect(protocol + hostHeaderValue +req.url);
+		var newUrl = protocol + hostHeaderValue +req.url; 
+		console.log("newUrl", newUrl);
+		res.redirect(newUrl);
 	}
 	else{
 		next();
