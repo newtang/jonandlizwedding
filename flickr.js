@@ -38,7 +38,7 @@ function constructPhotoJson(apiResults, tag){
 
 function buildImgUrl(item, size){
 	var type = "jpg";
-	return "http://farm" + item.farm + ".static.flickr.com/" + item.server + "/"+ item.id + "_" + item.secret;
+	return "https://farm" + item.farm + ".static.flickr.com/" + item.server + "/"+ item.id + "_" + item.secret;
 }
 
 module.exports = {
